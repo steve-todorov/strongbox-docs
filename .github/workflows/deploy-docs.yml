@@ -20,7 +20,7 @@ jobs:
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_MAIL }}"
           git remote add strongbox.github.io "https://${{ secrets.GITHUB_TOKEN }}@github.com/strongbox/strongbox.github.io"
-          git fetch upstream
+          git fetch strongbox.github.io
       - name: Prepare built assets
         run: |
           git checkout --orphan gh-pages
@@ -29,4 +29,4 @@ jobs:
           git commit -m "Updating documentation site."
       - name: Deploy
         run: | 
-          sh 'git push strongbox.github.io `git subtree split --prefix site gh-pages`:master --force'
+          git push strongbox.github.io `git subtree split --prefix site gh-pages`:master --force
