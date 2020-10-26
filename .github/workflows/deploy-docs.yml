@@ -1,0 +1,32 @@
+name: Deploy docs
+
+on:
+  push:
+    branches: [ master ]
+  workflow_run:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    container: strongboxci/mkdocs:base
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Build
+        run: mkdocs build
+      - name: Setup upstream
+        shell: |
+          git config user.name "${{ secrets.GH_USER }}"
+          git config user.email "${{ secrets.GH_MAIL }}"
+          git remote add strongbox.github.io "https://${{ secrets.GH_TOKEN}}@github.com/strongbox/strongbox.github.io"
+          git fetch upstream
+      - name: Prepare built assets
+        shell: |
+          git checkout --orphan gh-pages
+          find . -maxdepth 1 ! -name "site" ! -name ".git*" ! -name "." -exec git rm -rf {} \;
+          git add --force site
+          git commit -m "Updating documentation site."
+      - name: Deploy
+        shell: | 
+          sh 'git push strongbox.github.io `git subtree split --prefix site gh-pages`:master --force'
