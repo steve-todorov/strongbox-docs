@@ -13,7 +13,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: debug
-        run: "echo ${{ github.event.after }}"
+        run: "echo ${{ GITHUB_SHA::8 }}"
       - name: Build
         run: mkdocs build
       - name: Setup upstream
