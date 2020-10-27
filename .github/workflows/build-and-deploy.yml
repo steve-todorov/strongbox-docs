@@ -13,7 +13,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: debug
-        run: "echo ${{ toJSON(github.event) }}"
+        run: "echo ${{ github.event.after }}"
       - name: Build
         run: mkdocs build
       - name: Setup upstream
