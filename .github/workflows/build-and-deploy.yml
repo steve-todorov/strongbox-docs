@@ -12,6 +12,8 @@ jobs:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_API_TOKEN }} 
       - name: Get short SHA
         id: slug
         run: echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
