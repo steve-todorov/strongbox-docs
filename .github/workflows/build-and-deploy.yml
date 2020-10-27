@@ -15,7 +15,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: debug
-        run: "echo ${{ GITHUB_SHORT_SHA }}"
+        run: "echo $GITHUB_SHORT_SHA"
       - name: Build
         run: mkdocs build
       - name: Setup upstream
