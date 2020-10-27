@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     container: strongboxci/mkdocs:base
     env:
-      GITHUB_SHORT_SHA: ${GITHUB_SHA:7}
+      GITHUB_SHORT_SHA: "${GITHUB_SHA:8}"
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Check out repository code
