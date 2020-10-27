@@ -8,14 +8,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     container: strongboxci/mkdocs:base
-    env:
-      GITHUB_SHORT_SHA: "${GITHUB_SHA:8}"
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
       - name: debug
-        run: "echo $GITHUB_SHORT_SHA"
+        run: "echo ${{ steps.slug.outputs.short_sha }}"
       - name: Build
         run: mkdocs build
       - name: Setup upstream
